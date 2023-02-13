@@ -16,15 +16,6 @@ fn main() {
     let black = Color { red: 0, green: 0, blue: 0 };
     let primary = Color { red: 24, green: 120, blue: 209 };
 
-    // let color_under_test = Color { red: 103, green: 77, blue: 137 };
-    // let contrast_against_white = contrast(&color_under_test, &white);
-    // let contrast_against_black = contrast(&color_under_test, &black);
-    // // println!("Checking {:?}", color_under_test);
-    // println!("({:?} has {}:1 contrast against black, {}:1 contrast against white", color_under_test, contrast_against_black, contrast_against_white);
-    // if contrast_against_black >= 3.0 && contrast_against_white >= 7.0 {
-    //     println!("({:?} has {}:1 contrast against black, {}:1 contrast against white", color_under_test, contrast_against_black, contrast_against_white);
-    // }
-
     let mut passing_colors: Vec<Color> = vec![];
     let mut greatest_min_contrast: (Color, f64) = (Color { red: 0, green: 0, blue: 0 }, 0.0);
     let mut greatest_cume_contrast: (Color, f64) = (Color { red: 0, green: 0, blue: 0 }, 0.0);
@@ -37,7 +28,7 @@ fn main() {
                 let contrast_against_white = contrast(&color_under_test, &white);
                 let contrast_against_black = contrast(&color_under_test, &black);
                 let lightness = lightness(&color_under_test);
-                if contrast_against_primary > 3.0 && contrast_against_white > 4.5 {
+                if contrast_against_white > 4.5 && contrast_against_black > 4.5 {
                     passing_colors.push(color_under_test.clone());
                     if contrast_against_black.min(contrast_against_white) > greatest_min_contrast.1 {
                         greatest_min_contrast = (color_under_test.clone(), contrast_against_black.min(contrast_against_white));
@@ -103,9 +94,6 @@ fn lightness(color: &Color) -> f64 {
     let r = f64::from(color.red);
     let g = f64::from(color.green);
     let b = f64::from(color.blue);
-    // let r = normalize(rs);
-    // let g = normalize(gs);
-    // let b = normalize(bs);
 
     let max = r.max(g.max(b));
     let min = r.min(g.min(b));
